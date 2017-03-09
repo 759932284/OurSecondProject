@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,9 @@ import android.widget.TextView;
 
 import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.base.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
@@ -42,7 +47,8 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     private long pos = 0;
     private Bundle savedInstanceState;
     private boolean first = true;
-
+    private RecyclerView stageRv;
+    private RecyclerView moreRecommondRv;
 
     // 记录切换横竖屏播放的记录1
     @Override
@@ -56,6 +62,24 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     @Override
     public int getLayoutId() {
         return R.layout.activity_play;
+    }
+
+    private void initView() {
+        mVideoView = (VideoView) findViewById(R.id.buffer);
+        mCustomMediaController=new CustomMediaController(this,mVideoView,this);
+
+        Intent intent = getIntent();
+        path = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
+
+        mCustomMediaController.setVideoName(title);
+        pb = (ProgressBar) findViewById(R.id.probar);
+        downloadRateView = (TextView) findViewById(R.id.download_rate);
+        loadRateView = (TextView) findViewById(R.id.load_rate);
+
+        // 两种recyclerView
+        stageRv = (RecyclerView) findViewById(R.id.detail_stage_rv);
+        moreRecommondRv = (RecyclerView)findViewById(R.id.detail_more_recommond_rv);
     }
 
     @Override
@@ -81,6 +105,27 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 
         initView();
         initDatas();
+
+        // 创建更新至多少集的适配器,并传入数据
+        PlayStageAdapter playStageAdapter = new PlayStageAdapter(this);
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            data.add("具体内容");
+        }
+        playStageAdapter.setData(data);
+        stageRv.setAdapter(playStageAdapter);
+        stageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        // 创建更多推荐的适配器,并传入数据
+        PlayRecommondAdapter playRecommondAdapter = new PlayRecommondAdapter(this);
+        List<String> datas = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            datas.add("详细内容");
+        }
+        playRecommondAdapter.setDatas(datas);
+        moreRecommondRv.setAdapter(playRecommondAdapter);
+        moreRecommondRv.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     @Override
@@ -88,20 +133,6 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 
         outState.putLong(KEY_POS,mVideoView.getCurrentPosition());
         super.onSaveInstanceState(outState);
-    }
-
-    private void initView() {
-        mVideoView = (VideoView) findViewById(R.id.buffer);
-        mCustomMediaController=new CustomMediaController(this,mVideoView,this);
-
-        Intent intent = getIntent();
-        path = intent.getStringExtra("url");
-        title = intent.getStringExtra("title");
-
-        mCustomMediaController.setVideoName(title);
-        pb = (ProgressBar) findViewById(R.id.probar);
-        downloadRateView = (TextView) findViewById(R.id.download_rate);
-        loadRateView = (TextView) findViewById(R.id.load_rate);
     }
 
     private void initDatas() {
@@ -135,25 +166,19 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         switch (what) {
             case MediaPlayer.MEDIA_INFO_BUFFERING_START:
                 if (mVideoView.isPlaying()) {
-
-
                     if (first) {
                         mp.seekTo(pos);
-
                         first = false;
                     }
                     mVideoView.pause();
-
                     pb.setVisibility(View.VISIBLE);
                     downloadRateView.setText("");
                     loadRateView.setText("");
                     downloadRateView.setVisibility(View.VISIBLE);
                     loadRateView.setVisibility(View.VISIBLE);
-
                 }
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-
 
                 // 记录切换横竖屏播放的记录
                 if (first) {
@@ -163,7 +188,6 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
                 }
                 mVideoView.start();
                 //***************
-
 
                 pb.setVisibility(View.GONE);
                 downloadRateView.setVisibility(View.GONE);
@@ -183,11 +207,6 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 //            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_FIT_PARENT, 0);
 //        }
         super.onConfigurationChanged(newConfig);
-//        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            mVideoView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_play, null);
-//        } else {
-//
-//        }
     }
 
 }

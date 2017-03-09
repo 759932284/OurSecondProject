@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/detail_play_more_recommond_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"/>
+    <TextView
+        android:id="@+id/detail_play_more_recommond_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/detail_play_more_recommond_iv"
+        android:text="题目"/>
+    <TextView
+        android:id="@+id/detail_play_more_recommond_author_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/detail_play_more_recommond_iv"
+        android:layout_below="@+id/detail_play_more_recommond_title_tv"
+      android:text="作者"/>
+    <TextView
+        android:id="@+id/detail_play_more_recommond_number_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detail_play_more_recommond_title_tv"
+        android:layout_alignParentRight="true"
+        android:text="1000次"/>
+
+</RelativeLayout>
