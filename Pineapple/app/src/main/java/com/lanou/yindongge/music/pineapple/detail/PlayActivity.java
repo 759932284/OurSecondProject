@@ -1,7 +1,6 @@
 package com.lanou.yindongge.music.pineapple.detail;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -113,8 +111,10 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
             data.add("具体内容");
         }
         playStageAdapter.setData(data);
-        stageRv.setAdapter(playStageAdapter);
-        stageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        if (stageRv != null) {
+            stageRv.setAdapter(playStageAdapter);
+            stageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        }
 
         // 创建更多推荐的适配器,并传入数据
         PlayRecommondAdapter playRecommondAdapter = new PlayRecommondAdapter(this);
@@ -123,8 +123,11 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
             datas.add("详细内容");
         }
         playRecommondAdapter.setDatas(datas);
-        moreRecommondRv.setAdapter(playRecommondAdapter);
-        moreRecommondRv.setLayoutManager(new LinearLayoutManager(this));
+        if (moreRecommondRv != null) {
+            moreRecommondRv.setAdapter(playRecommondAdapter);
+            moreRecommondRv.setLayoutManager(new LinearLayoutManager(this));
+        }
+
 
     }
 
