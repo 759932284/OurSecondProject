@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="#ffffff"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".base.BaseActivity">
+    <!--<StackView-->
+        <!--android:id="@+id/hot_sv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:loopViews="true"/>-->
+
+    <!--<LinearLayout-->
+        <!--android:orientation = "vertical"-->
+        <!--android:layout_width = "wrap_content"-->
+        <!--android:layout_height = "wrap_content">-->
+
+        <!--<Button-->
+            <!--android:id = "@+id/previousButton"-->
+            <!--android:layout_width = "wrap_content"-->
+            <!--android:layout_height = "wrap_content"-->
+            <!--android:text = "前一张"/>-->
+
+        <!--<Button-->
+            <!--android:id = "@+id/nextButton"-->
+            <!--android:layout_width = "wrap_content"-->
+            <!--android:layout_height = "wrap_content"-->
+            <!--android:text = "后一张"/>-->
+
+    <!--</LinearLayout>-->
+</FrameLayout>
