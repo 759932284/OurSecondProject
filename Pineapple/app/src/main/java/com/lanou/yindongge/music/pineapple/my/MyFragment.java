@@ -336,19 +336,19 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                         return true;
                     } else {
                         Toast.makeText(context, "密码不足8位", Toast.LENGTH_SHORT).show();
-                        password.requestFocus();
+//                        password.requestFocus();
                     }
                 } else {
                     Toast.makeText(context, "密码不能为空", Toast.LENGTH_SHORT).show();
-                    password.requestFocus();
+//                    password.requestFocus();
                 }
             } else {
                 Toast.makeText(context, "手机号不足11位", Toast.LENGTH_SHORT).show();
-                account.requestFocus();
+//                account.requestFocus();
             }
         } else {
             Toast.makeText(context, "手机号不能为空", Toast.LENGTH_SHORT).show();
-            account.requestFocus();
+//            account.requestFocus();
         }
         return false;
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanou.yindongge.music.pineapple.R;
+import com.lanou.yindongge.music.pineapple.bean.GameTalkMoreResponse;
 
 import java.util.List;
 
@@ -16,15 +17,15 @@ import java.util.List;
  */
 
 public class PlayStageAdapter extends RecyclerView.Adapter<PlayStageAdapter.PlayStageViewHolder> {
-    private List<String> data;
+    private List<GameTalkMoreResponse> dataMore;
     private Context context;
 
     public PlayStageAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<String> data) {
-        this.data = data;
+    public void setDataMore(List<GameTalkMoreResponse> dataMore) {
+        this.dataMore = dataMore;
         notifyDataSetChanged();
     }
 
@@ -37,12 +38,12 @@ public class PlayStageAdapter extends RecyclerView.Adapter<PlayStageAdapter.Play
 
     @Override
     public void onBindViewHolder(PlayStageViewHolder holder, int position) {
-        holder.detailPlayStageTv.setText(data.get(position));
+        holder.detailPlayStageTv.setText(dataMore.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return data != null ? data.size() : 0;
+        return dataMore != null ? dataMore.size() : 0;
     }
 
     class PlayStageViewHolder extends RecyclerView.ViewHolder{

@@ -38,7 +38,8 @@ public class Contant {
     public static final String HOME_HERO = BASE_URL + "zone/categoryVideoList.htm?len=5&zoneId=14836951235121";
     // 首页-炉石传说
     public static final String HOME_LEGEND = BASE_URL + "zone/categoryVideoList.htm?len=5&zoneId=14836951235151";
-
+    // 游戏杂谈-最新投稿
+    public static final String GAME_TALK_MORE = BASE_URL + "zone/zoneNewVideoList.htm?pageNum=1&zoneId=14847213448701&pageSize=16";
 
     public static final String HOT_BORING = BASE_URL + "rank/sceneList.htm";
 
@@ -82,7 +83,8 @@ public class Contant {
     public static final int HOME_HERO_REQUESTCODE = index++;
     // 首页-炉石传说
     public static final int HOME_LEGEND_REQUESTCODE = index++;
-
+    // 游戏杂谈-最新投稿
+    public static final int GAME_TALK_MORE_REQUESTCODE = index++;
     //
     public static final int HOT = index++;
 }
