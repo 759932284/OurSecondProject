@@ -8,8 +8,6 @@
 
 package cn.sharesdk.onekeyshare.themes.classic;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,11 +19,14 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.onekeyshare.CustomerLogo;
 
 import com.mob.tools.gui.ViewPagerAdapter;
 import com.mob.tools.utils.ResHelper;
+
+import java.util.ArrayList;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.onekeyshare.CustomerLogo;
 
 /** 九宫格的适配器抽象类 */
 public abstract class PlatformPageAdapter extends ViewPagerAdapter implements OnClickListener {
@@ -153,7 +154,7 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 	private void refreshPanel(LinearLayout[] llCells, Object[] logos) {
 		int cellBack = ResHelper.getBitmapRes(page.getContext(), "ssdk_oks_classic_platform_cell_back");
 		int disableBack = ResHelper.getBitmapRes(page.getContext(), "ssdk_oks_classic_platfrom_cell_back_nor");
-		for (int i = 0; i < logos.length; i++) {
+		for (int i = 0; i < 6; i++) {
 			ImageView ivLogo = ResHelper.forceCast(llCells[i].getChildAt(0));
 			TextView tvName = ResHelper.forceCast(llCells[i].getChildAt(1));
 			if (logos[i] == null) {

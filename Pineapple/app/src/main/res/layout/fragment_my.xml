@@ -4,6 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:background="#FFAF1A"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="多功能混合界面"
+        android:textSize="18sp"
+        android:textColor="#000000" />
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +56,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="#6ED0FB"
+            android:background="#FFAF1A"
             android:hint="获取短信验证码"
             android:textColor="#000"
             android:textSize="10sp" />
@@ -58,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="#6ED0FB"
+        android:background="#FFAF1A"
         android:textSize="20sp"
         android:text="登录"/>
 
@@ -79,14 +88,18 @@
             android:id="@+id/QQ"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/qq_iv"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"/>
+                android:src="@mipmap/login_qq_n"/>
             <TextView
+                android:id="@+id/qq_tv"
+                android:layout_marginTop="7dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -103,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"/>
+                android:src="@mipmap/login_wechat_n"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,11 +131,13 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/weibo_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"/>
+                android:src="@mipmap/login_weibo_n"/>
             <TextView
+                android:id="@+id/weibo_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -134,7 +149,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -142,19 +157,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="4dp"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"
+                android:src="@mipmap/mine_home"
                 android:id="@+id/imageView" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="17dp"
                 android:text="地图"/>
         </LinearLayout>
         <LinearLayout
@@ -167,21 +184,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"/>
+                android:src="@mipmap/mine_mark"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="15dp"
                 android:text="二维码"/>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp">
         <LinearLayout
+            android:id="@+id/favor_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -190,11 +202,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"/>
+                android:src="@mipmap/mine_read_history"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="15dp"
                 android:text="收藏"/>
         </LinearLayout>
         <LinearLayout
@@ -202,19 +215,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="4dp"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_share_qq"/>
+                android:src="@mipmap/mine_follow"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="15dp"
                 android:text="分享"/>
         </LinearLayout>
     </LinearLayout>
+
+
+
+
 
 
 </LinearLayout>

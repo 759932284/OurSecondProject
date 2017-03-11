@@ -66,8 +66,12 @@ public class HomeCommentAdapter extends RecyclerView.Adapter<HomeCommentAdapter.
                     Intent intent = new Intent(context, PlayActivity.class);
                     String url = dataHomeGameTalk.get(position).getVideoList().get(positionDetail).getLinkMp4();
                     String title = dataHomeGameTalk.get(position).getVideoList().get(positionDetail).getTitle();
+                    String author = dataHomeGameTalk.get(position).getVideoList().get(positionDetail).getChannelName();
+                    String imgStr = dataHomeGameTalk.get(position).getVideoList().get(positionDetail).getCover();
                     intent.putExtra("url", url);
                     intent.putExtra("title", title);
+                    intent.putExtra("author", author);
+                    intent.putExtra("imgStr", imgStr);
                     context.startActivity(intent);
                 }
             });

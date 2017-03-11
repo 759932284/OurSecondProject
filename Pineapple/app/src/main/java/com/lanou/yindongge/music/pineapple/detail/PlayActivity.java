@@ -11,11 +11,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.base.BaseActivity;
+import com.lanou.yindongge.music.pineapple.bean.FavorEntity;
+import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.QueryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +33,7 @@ import io.vov.vitamio.widget.VideoView;
  * Vitamio视频播放框架Demo
  */
 
-public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener{
+public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, View.OnClickListener{
 
     //视频地址
     private String path;
@@ -47,6 +52,13 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     private boolean first = true;
     private RecyclerView stageRv;
     private RecyclerView moreRecommondRv;
+    private LiteOrm liteOrm;
+    private String author;
+    private String imgStr;
+    private List<FavorEntity> listQuery;
+  //  private List<FavorEntity> list;
+    private FavorEntity favorEntity;
+    private ImageView saveIv;
 
     // 记录切换横竖屏播放的记录1
     @Override
@@ -56,21 +68,17 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
       //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_play;
     }
 
     private void initView() {
+        saveIv = byView(R.id.detail_store_iv);
+        saveIv.setOnClickListener(this);
+
         mVideoView = (VideoView) findViewById(R.id.buffer);
-        mCustomMediaController=new CustomMediaController(this,mVideoView,this);
 
-        Intent intent = getIntent();
-        path = intent.getStringExtra("url");
-        title = intent.getStringExtra("title");
-
-        mCustomMediaController.setVideoName(title);
         pb = (ProgressBar) findViewById(R.id.probar);
         downloadRateView = (TextView) findViewById(R.id.download_rate);
         loadRateView = (TextView) findViewById(R.id.load_rate);
@@ -81,7 +89,36 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        QueryBuilder<FavorEntity> qb = new QueryBuilder<>(FavorEntity.class);
+        qb.where("title = ?", new Object[]{title});
+        listQuery = liteOrm.query(qb);
+        if (listQuery.size() > 0) {
+            saveIv.setImageResource(R.mipmap.video_player_favored);
+        }
+    }
+
+    @Override
     public void initData() {
+        // 创建数据库
+        liteOrm = LiteOrm.newSingleInstance(this, "video.db");
+
+
+
+        mCustomMediaController=new CustomMediaController(this,mVideoView,this);
+
+        Intent intent = getIntent();
+        path = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
+        author = intent.getStringExtra("author");
+        imgStr = intent.getStringExtra("imgStr");
+
+
+
+        mCustomMediaController.setVideoName(title);
+
+
         //定义全屏参数
         int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         //获得当前窗体对象
@@ -212,4 +249,44 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         super.onConfigurationChanged(newConfig);
     }
 
+    // 收藏按钮
+    @Override
+    public void onClick(View v) {
+        // 按title查询
+        QueryBuilder<FavorEntity> qb = new QueryBuilder<>(FavorEntity.class);
+        qb.where("title = ?", new Object[]{title});
+        listQuery = liteOrm.query(qb);
+        Log.d("PlayActivity", "listQuery.size():" + listQuery.size());
+
+        if (listQuery.size() == 0) {
+            favorEntity = buildData();
+            liteOrm.insert(favorEntity);
+            Toast.makeText(this, "加入收藏", Toast.LENGTH_SHORT).show();
+            saveIv.setImageResource(R.mipmap.video_player_favored);
+        }
+        else if(listQuery.size() > 0){
+            liteOrm.delete(listQuery);
+            Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
+            saveIv.setImageResource(R.mipmap.video_player_favor);
+        }
+    }
+
+//    private List<FavorEntity> buildData() {
+//        List<FavorEntity> dataFavor = new ArrayList<>();
+//        FavorEntity favorEntity = new FavorEntity();
+//        favorEntity.setTitle(title);
+//        favorEntity.setAuthor(author);
+//        favorEntity.setImgStr(imgStr);
+//        favorEntity.setUrl(path);
+//        dataFavor.add(favorEntity);
+//        return dataFavor;
+//    }
+    private FavorEntity buildData(){
+        FavorEntity favorEntity = new FavorEntity();
+        favorEntity.setTitle(title);
+        favorEntity.setAuthor(author);
+        favorEntity.setImgStr(imgStr);
+        favorEntity.setUrl(path);
+        return favorEntity;
+    }
 }
