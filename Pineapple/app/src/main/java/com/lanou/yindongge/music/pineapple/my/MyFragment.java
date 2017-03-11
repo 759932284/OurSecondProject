@@ -2,6 +2,9 @@ package com.lanou.yindongge.music.pineapple.my;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +21,8 @@ import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.base.BaseFragment;
 import com.lanou.yindongge.music.pineapple.my.favor.FavorActivity;
 import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
+import com.xys.libzxing.zxing.activity.CaptureActivity;
+import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -29,6 +34,9 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by dllo on 17/2/18.
@@ -63,15 +71,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         getCodeBtn = byView(R.id.sms_code);
         codeEt = byView(R.id.sms_code_et);
         commitBtn = byView(R.id.login);
-        LinearLayout qqLl = (LinearLayout)view.findViewById(R.id.QQ);
-        LinearLayout weiboLl = (LinearLayout)view.findViewById(R.id.weibo);
+        LinearLayout qqLl = (LinearLayout) view.findViewById(R.id.QQ);
+        LinearLayout weiboLl = (LinearLayout) view.findViewById(R.id.weibo);
         qqLl.setOnClickListener(this);
         weiboLl.setOnClickListener(this);
         qqIv = byView(R.id.qq_iv);
         qqTv = byView(R.id.qq_tv);
 
+        LinearLayout scan = byView(R.id.scan);
+        scan.setOnClickListener(this);
+
         // 分享链接id
-        LinearLayout shareLl = (LinearLayout)view.findViewById(R.id.share);
+        LinearLayout shareLl = (LinearLayout) view.findViewById(R.id.share);
         shareLl.setOnClickListener(this);
 
     }
@@ -166,9 +177,27 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 Intent intent = new Intent(context, FavorActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.scan:
+                startActivityForResult(new Intent(context, CaptureActivity.class), 0);
+                break;
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String result = bundle.getString("result");
+            Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra("result", result);
+            startActivity(intent);
+        }
+        if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(context, "扫描错误", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     //***********************************************************
     // 微博登录方法
