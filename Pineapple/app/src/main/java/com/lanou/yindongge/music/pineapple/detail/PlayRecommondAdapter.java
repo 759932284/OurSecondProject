@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanou.yindongge.music.pineapple.R;
+import com.lanou.yindongge.music.pineapple.bean.GameTalkMoreResponse;
+import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
+import com.lanou.yindongge.music.pineapple.util.ScreenSizeUtils;
+import com.lanou.yindongge.music.pineapple.util.ScreenState;
 
 import java.util.List;
 
@@ -19,10 +23,10 @@ import java.util.List;
 public class PlayRecommondAdapter extends RecyclerView.Adapter<PlayRecommondAdapter.PlayRecommondViewHolder> {
 
     private Context context;
-    private List<String> datas;
+    private List<GameTalkMoreResponse> dataMore;
 
-    public void setDatas(List<String> datas) {
-        this.datas = datas;
+    public void setDataMore(List<GameTalkMoreResponse> dataMore) {
+        this.dataMore = dataMore;
         notifyDataSetChanged();
     }
 
@@ -40,14 +44,20 @@ public class PlayRecommondAdapter extends RecyclerView.Adapter<PlayRecommondAdap
     @Override
     public void onBindViewHolder(PlayRecommondViewHolder holder, int position) {
         holder.moreRecommondIv.setImageResource(R.mipmap.ic_launcher);
-        holder.moreRecommondTitle.setText(datas.get(position));
-        holder.moreRecommondAuthor.setText(datas.get(position));
+        holder.moreRecommondTitle.setText(dataMore.get(position).getTitle());
+        holder.moreRecommondAuthor.setText(dataMore.get(position).getChannelName());
+        ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context,
+                dataMore.get(position).getCover(), holder.moreRecommondIv);
         holder.moreRecommondNum.setText(1000 + "");
+        ViewGroup.LayoutParams lp = holder.moreRecommondIv.getLayoutParams();
+        lp.width = ScreenSizeUtils.getSreen(context, ScreenState.WIDTH) / 5 * 2;
+        lp.height = ScreenSizeUtils.getSreen(context, ScreenState.HEIGHT) / 6;
+        holder.moreRecommondIv.setLayoutParams(lp);
     }
 
     @Override
     public int getItemCount() {
-        return datas != null ? datas.size() : 0;
+        return dataMore != null ? dataMore.size() : 0;
     }
 
     class PlayRecommondViewHolder extends RecyclerView.ViewHolder{

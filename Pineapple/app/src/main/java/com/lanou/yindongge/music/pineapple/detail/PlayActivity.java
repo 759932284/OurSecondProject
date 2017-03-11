@@ -16,15 +16,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.base.BaseActivity;
 import com.lanou.yindongge.music.pineapple.bean.FavorEntity;
+import com.lanou.yindongge.music.pineapple.bean.GameTalkMoreResponse;
+import com.lanou.yindongge.music.pineapple.net.OkHttpManager;
+import com.lanou.yindongge.music.pineapple.net.OnNetResultListener;
+import com.lanou.yindongge.music.pineapple.util.Contant;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.QueryBuilder;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.widget.VideoView;
@@ -33,11 +41,12 @@ import io.vov.vitamio.widget.VideoView;
  * Vitamio视频播放框架Demo
  */
 
-public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, View.OnClickListener{
+public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoListener,
+        MediaPlayer.OnBufferingUpdateListener, View.OnClickListener, OnNetResultListener {
 
     //视频地址
     private String path;
-//            = "http://baobab.wdjcdn.com/145076769089714.mp4";
+    //            = "http://baobab.wdjcdn.com/145076769089714.mp4";
     private String title;
     private Uri uri;
     private ProgressBar pb;
@@ -56,16 +65,18 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     private String author;
     private String imgStr;
     private List<FavorEntity> listQuery;
-  //  private List<FavorEntity> list;
+    //  private List<FavorEntity> list;
     private FavorEntity favorEntity;
     private ImageView saveIv;
+    private ImageView shareIv;
+    private TextView detailTitleTv;
 
     // 记录切换横竖屏播放的记录1
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.savedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
-      //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -74,6 +85,10 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     }
 
     private void initView() {
+        detailTitleTv = byView(R.id.detail_title_tv);
+
+        shareIv = byView(R.id.detail_share_iv);
+        shareIv.setOnClickListener(this);
         saveIv = byView(R.id.detail_store_iv);
         saveIv.setOnClickListener(this);
 
@@ -85,7 +100,7 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 
         // 两种recyclerView
         stageRv = (RecyclerView) findViewById(R.id.detail_stage_rv);
-        moreRecommondRv = (RecyclerView)findViewById(R.id.detail_more_recommond_rv);
+        moreRecommondRv = (RecyclerView) findViewById(R.id.detail_more_recommond_rv);
     }
 
     @Override
@@ -95,7 +110,10 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         qb.where("title = ?", new Object[]{title});
         listQuery = liteOrm.query(qb);
         if (listQuery.size() > 0) {
-            saveIv.setImageResource(R.mipmap.video_player_favored);
+            if (saveIv != null) {
+                saveIv.setImageResource(R.mipmap.video_player_favored);
+            }
+
         }
     }
 
@@ -103,21 +121,15 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     public void initData() {
         // 创建数据库
         liteOrm = LiteOrm.newSingleInstance(this, "video.db");
+        mCustomMediaController = new CustomMediaController(this, mVideoView, this);
 
-
-
-        mCustomMediaController=new CustomMediaController(this,mVideoView,this);
-
+        // 接收从视频界面传过来的数据
         Intent intent = getIntent();
         path = intent.getStringExtra("url");
         title = intent.getStringExtra("title");
         author = intent.getStringExtra("author");
         imgStr = intent.getStringExtra("imgStr");
-
-
-
         mCustomMediaController.setVideoName(title);
-
 
         //定义全屏参数
         int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -133,51 +145,49 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 //        }
         // 记录切换横竖屏播放的记录
 
-        if (savedInstanceState != null){
-                pos = savedInstanceState.getLong(KEY_POS,0);
+        if (savedInstanceState != null) {
+            pos = savedInstanceState.getLong(KEY_POS, 0);
             Log.d("PlayActivity", "456:" + pos);
-            }
+        }
 
         initView();
         initDatas();
 
         // 创建更新至多少集的适配器,并传入数据
-        PlayStageAdapter playStageAdapter = new PlayStageAdapter(this);
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            data.add("具体内容");
-        }
-        playStageAdapter.setData(data);
-        if (stageRv != null) {
-            stageRv.setAdapter(playStageAdapter);
-            stageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        }
+//        PlayStageAdapter playStageAdapter =  new PlayStageAdapter(this);
+        // 网络请求多少集的数据
+        OkHttpManager.getInstance().startGetRequest(Contant.GAME_TALK_MORE, Contant.GAME_TALK_MORE_REQUESTCODE, this);
+//        List<String> data = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            data.add("具体内容");
+//        }
+//        playStageAdapter.setData(data);
+//        if (stageRv != null) {
+//            stageRv.setAdapter(playStageAdapter);
+//            stageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        }
 
-        // 创建更多推荐的适配器,并传入数据
-        PlayRecommondAdapter playRecommondAdapter = new PlayRecommondAdapter(this);
-        List<String> datas = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            datas.add("详细内容");
-        }
-        playRecommondAdapter.setDatas(datas);
-        if (moreRecommondRv != null) {
-            moreRecommondRv.setAdapter(playRecommondAdapter);
-            moreRecommondRv.setLayoutManager(new LinearLayoutManager(this));
-        }
-
-
+//        // 创建更多推荐的适配器,并传入数据
+//        PlayRecommondAdapter playRecommondAdapter = new PlayRecommondAdapter(this);
+//        List<String> datas = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            datas.add("详细内容");
+//        }
+//        playRecommondAdapter.setDatas(datas);
+//        if (moreRecommondRv != null) {
+//            moreRecommondRv.setAdapter(playRecommondAdapter);
+//            moreRecommondRv.setLayoutManager(new LinearLayoutManager(this));
+//        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        outState.putLong(KEY_POS,mVideoView.getCurrentPosition());
+        outState.putLong(KEY_POS, mVideoView.getCurrentPosition());
         super.onSaveInstanceState(outState);
     }
 
     private void initDatas() {
-
-
         uri = Uri.parse(path);
         mVideoView.setVideoURI(uri);//设置视频播放地址
 
@@ -252,41 +262,92 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     // 收藏按钮
     @Override
     public void onClick(View v) {
-        // 按title查询
-        QueryBuilder<FavorEntity> qb = new QueryBuilder<>(FavorEntity.class);
-        qb.where("title = ?", new Object[]{title});
-        listQuery = liteOrm.query(qb);
-        Log.d("PlayActivity", "listQuery.size():" + listQuery.size());
+        switch (v.getId()) {
+            case R.id.detail_store_iv:
+                // 按title查询
+                QueryBuilder<FavorEntity> qb = new QueryBuilder<>(FavorEntity.class);
+                qb.where("title = ?", new Object[]{title});
+                listQuery = liteOrm.query(qb);
+                Log.d("PlayActivity", "listQuery.size():" + listQuery.size());
 
-        if (listQuery.size() == 0) {
-            favorEntity = buildData();
-            liteOrm.insert(favorEntity);
-            Toast.makeText(this, "加入收藏", Toast.LENGTH_SHORT).show();
-            saveIv.setImageResource(R.mipmap.video_player_favored);
+                if (listQuery.size() == 0) {
+                    favorEntity = buildData();
+                    liteOrm.insert(favorEntity);
+                    Toast.makeText(this, "加入收藏", Toast.LENGTH_SHORT).show();
+                    saveIv.setImageResource(R.mipmap.video_player_favored);
+                } else if (listQuery.size() > 0) {
+                    liteOrm.delete(listQuery);
+                    Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
+                    saveIv.setImageResource(R.mipmap.video_player_favor);
+                }
+                break;
+            case R.id.detail_share_iv:
+                showShare();
+                break;
         }
-        else if(listQuery.size() > 0){
-            liteOrm.delete(listQuery);
-            Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
-            saveIv.setImageResource(R.mipmap.video_player_favor);
-        }
+
     }
 
-//    private List<FavorEntity> buildData() {
-//        List<FavorEntity> dataFavor = new ArrayList<>();
-//        FavorEntity favorEntity = new FavorEntity();
-//        favorEntity.setTitle(title);
-//        favorEntity.setAuthor(author);
-//        favorEntity.setImgStr(imgStr);
-//        favorEntity.setUrl(path);
-//        dataFavor.add(favorEntity);
-//        return dataFavor;
-//    }
-    private FavorEntity buildData(){
+    private void showShare() {
+        ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle("标题");
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("我是分享文本");
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://sharesdk.cn");
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite("ShareSDK");
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+// 启动分享GUI
+        oks.show(this);
+    }
+
+    private FavorEntity buildData() {
         FavorEntity favorEntity = new FavorEntity();
         favorEntity.setTitle(title);
         favorEntity.setAuthor(author);
         favorEntity.setImgStr(imgStr);
         favorEntity.setUrl(path);
         return favorEntity;
+    }
+
+    @Override
+    public void onSuccessListener(String result, int requestCode) {
+        if (requestCode == Contant.GAME_TALK_MORE_REQUESTCODE) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<GameTalkMoreResponse>>() {
+            }.getType();
+            List<GameTalkMoreResponse> dataMore = gson.fromJson(result, type);
+            // 创建多少集的适配器,并且传入解析后的数据
+            PlayStageAdapter playStageAdapter = new PlayStageAdapter(this);
+            playStageAdapter.setDataMore(dataMore);
+            stageRv.setAdapter(playStageAdapter);
+            stageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            // 创建更多推荐的适配器, 并且传入解析后的数据
+            PlayRecommondAdapter playRecommondAdapter = new PlayRecommondAdapter(this);
+            playRecommondAdapter.setDataMore(dataMore);
+            moreRecommondRv.setAdapter(playRecommondAdapter);
+            moreRecommondRv.setLayoutManager(new LinearLayoutManager(this));
+            detailTitleTv.setText(title);
+        }
+
+    }
+
+    @Override
+    public void onFailureListener(String errMsg) {
+
     }
 }

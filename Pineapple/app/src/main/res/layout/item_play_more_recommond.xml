@@ -2,18 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
     <ImageView
         android:id="@+id/detail_play_more_recommond_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:src="@mipmap/ic_launcher"/>
     <TextView
+        android:layout_margin="10dp"
         android:id="@+id/detail_play_more_recommond_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/detail_play_more_recommond_iv"
         android:text="题目"/>
     <TextView
+        android:layout_margin="10dp"
         android:id="@+id/detail_play_more_recommond_author_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,11 +30,12 @@
         android:layout_below="@+id/detail_play_more_recommond_title_tv"
       android:text="作者"/>
     <TextView
+        android:layout_margin="10dp"
         android:id="@+id/detail_play_more_recommond_number_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_play_more_recommond_title_tv"
         android:layout_alignParentRight="true"
         android:text="1000次"/>
-
+    </RelativeLayout>
 </RelativeLayout>
