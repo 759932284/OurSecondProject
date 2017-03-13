@@ -52,6 +52,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
     private ImageView qqIv;
     private TextView qqTv;
+    private LinearLayout map, wechat, weibo;
+    private LinearLayout qqLl;
 
     @Override
     public int getLayoutId() {
@@ -68,12 +70,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         getCodeBtn = byView(R.id.sms_code);
         codeEt = byView(R.id.sms_code_et);
         commitBtn = byView(R.id.login);
-        LinearLayout qqLl = (LinearLayout) view.findViewById(R.id.QQ);
-        LinearLayout weiboLl = (LinearLayout) view.findViewById(R.id.weibo);
+        qqLl = (LinearLayout) view.findViewById(R.id.QQ);
+        weibo = (LinearLayout) view.findViewById(R.id.weibo);
         qqLl.setOnClickListener(this);
-        weiboLl.setOnClickListener(this);
+        weibo.setOnClickListener(this);
         qqIv = byView(R.id.qq_iv);
         qqTv = byView(R.id.qq_tv);
+        map = byView(R.id.map);
+        map.setOnClickListener(this);
+        wechat = byView(R.id.wechat);
+        wechat.setOnClickListener(this);
 
         LinearLayout scan = byView(R.id.scan);
         scan.setOnClickListener(this);
@@ -159,12 +165,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
             case R.id.login:
                 VaildateputInfo();
                 break;
-
             case R.id.QQ:
                 mobQQLogin();
                 break;
             case R.id.weibo:
-                mobWeiBoLogin();
+                Toast.makeText(context, "当前版本过低, 请升级后再试", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.share:
                 showShare();
@@ -175,6 +180,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 break;
             case R.id.scan:
                 startActivityForResult(new Intent(context, CaptureActivity.class), 0);
+                break;
+            case R.id.map:
+                Toast.makeText(context, "当前版本过低, 请升级后再试", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.wechat:
+                Toast.makeText(context, "当前版本过低, 请升级后再试", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -194,12 +205,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(context, "扫描错误", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    //***********************************************************
-    // 微博登录方法
-    private void mobWeiBoLogin() {
-
     }
 
     // QQ登录方法
