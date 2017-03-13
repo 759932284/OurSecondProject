@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * Created by dllo on 17/2/22.
+ *
+ * 发现
  */
 
 public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -82,14 +84,6 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case SEARCH:
                 itemView = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false);
                 holder = new SearchHolder(itemView);
-//                searchAdapter.setOnSearchTagClickListener(new SearchAdapter.OnSearchTagClickListener() {
-//                    @Override
-//                    public void onSearchTagClick(int position) {
-//                        Intent intent = new Intent(context, SearchTagActivity.class);
-//                        intent.putExtra("searchTag", searchDatas.get(position).getKeyword());
-//                        context.startActivity(intent);
-//                    }
-//                });
                 break;
             case GOSSIP:
                 itemView = LayoutInflater.from(context).inflate(R.layout.item_gossip, parent, false);

@@ -25,6 +25,8 @@ import java.util.List;
 
 /**
  * Created by dllo on 17/2/22.
+ *
+ * 杂谈
  */
 
 public class GossipAdapter extends RecyclerView.Adapter<GossipAdapter.GossipImageViewHolder> {

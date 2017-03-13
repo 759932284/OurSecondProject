@@ -18,6 +18,8 @@ import java.util.List;
 
 /**
  * Created by dllo on 17/2/22.
+ *
+ * 搜索
  */
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder>{

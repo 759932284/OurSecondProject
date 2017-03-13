@@ -1,13 +1,17 @@
 package com.lanou.yindongge.music.pineapple.find;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.base.BaseActivity;
 
+
+/**
+ *  搜索点击后跳转
+ */
 public class SearchTagActivity extends BaseActivity {
 
 
@@ -24,5 +28,13 @@ public class SearchTagActivity extends BaseActivity {
 
         EditText searchEt = (EditText) findViewById(R.id.search_et);
         searchEt.setText(searchTag);
+
+        TextView cancel = byView(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }
