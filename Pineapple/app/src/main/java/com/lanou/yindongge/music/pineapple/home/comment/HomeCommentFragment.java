@@ -1,4 +1,4 @@
-package com.lanou.yindongge.music.pineapple.home;
+package com.lanou.yindongge.music.pineapple.home.comment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +25,9 @@ import java.util.List;
  * Created by dllo on 17/2/18.
  */
 
+/**
+ * 首页通用fragment
+ */
 public class HomeCommentFragment extends BaseFragment implements OnNetResultListener{
 
     private String url;
@@ -103,56 +106,43 @@ public class HomeCommentFragment extends BaseFragment implements OnNetResultList
         Gson gson = new Gson();
 
         if (requestCode == Contant.HOME_GAME_TALK_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_LAUGH_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_CATOON_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_ANIMAL_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_FOOD_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_QUADRATIC_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_AMUSE_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_NET_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_HERO_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
         if (requestCode == Contant.HOME_LEGEND_REQUESTCODE) {
-            Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
-            List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
-            homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+            setData(result, gson);
         }
     }
+
+    private void setData(String result, Gson gson) {
+        Type type = new TypeToken<List<HomeGameTalkResponse>>(){}.getType();
+        List<HomeGameTalkResponse> dataHomeGameTalk = gson.fromJson(result, type);
+        homeCommentAdapter.setDataHomeGameTalk(dataHomeGameTalk);
+    }
+
     @Override
     public void onFailureListener(String errMsg) {
         Toast.makeText(context, errMsg, Toast.LENGTH_SHORT).show();

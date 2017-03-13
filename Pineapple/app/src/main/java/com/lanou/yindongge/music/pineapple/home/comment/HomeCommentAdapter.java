@@ -1,4 +1,4 @@
-package com.lanou.yindongge.music.pineapple.home;
+package com.lanou.yindongge.music.pineapple.home.comment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,9 @@ import java.util.List;
  * Created by dllo on 17/2/25.
  */
 
+/**
+ * 首页通用fragment的适配器
+ */
 public class HomeCommentAdapter extends RecyclerView.Adapter<HomeCommentAdapter.HomeCommentFirstViewHolder> {
     private Context context;
     private List<HomeGameTalkResponse> dataHomeGameTalk;

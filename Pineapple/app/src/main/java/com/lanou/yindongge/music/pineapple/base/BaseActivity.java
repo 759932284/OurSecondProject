@@ -9,6 +9,8 @@ import android.view.WindowManager;
 
 /**
  * Created by dllo on 17/2/18.
+ *
+ * 基类
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

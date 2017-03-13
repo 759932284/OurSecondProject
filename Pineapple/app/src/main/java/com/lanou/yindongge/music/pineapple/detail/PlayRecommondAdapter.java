@@ -20,6 +20,9 @@ import java.util.List;
  * Created by dllo on 17/3/9.
  */
 
+/**
+ * 视频详情界面-更多推荐的适配器
+ */
 public class PlayRecommondAdapter extends RecyclerView.Adapter<PlayRecommondAdapter.PlayRecommondViewHolder> {
 
     private Context context;

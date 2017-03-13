@@ -14,6 +14,9 @@ import okhttp3.Response;
  * Created by dllo on 17/2/24.
  */
 
+/**
+ * 网络获取类
+ */
 public class OkHttpManager {
     private static OkHttpManager instance;
     public static OkHttpManager getInstance() {

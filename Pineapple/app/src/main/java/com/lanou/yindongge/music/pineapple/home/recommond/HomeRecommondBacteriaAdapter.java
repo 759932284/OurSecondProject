@@ -19,7 +19,9 @@ import java.util.List;
 /**
  * Created by dllo on 17/2/20.
  */
-
+/**
+ * 首页-推荐界面-菠萝菌部分适配器
+ */
 public class HomeRecommondBacteriaAdapter extends RecyclerView.Adapter<HomeRecommondBacteriaAdapter.BacteriaViewHolder> {
 
     private Context context;

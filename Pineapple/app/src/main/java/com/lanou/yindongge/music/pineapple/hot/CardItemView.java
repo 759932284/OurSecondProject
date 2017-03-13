@@ -38,10 +38,6 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class CardItemView extends FrameLayout {
 
-    String videoUrl = "";
-
-
-
     private Spring springX, springY;
     public ImageView imageView;
     public View maskView;

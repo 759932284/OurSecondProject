@@ -16,6 +16,9 @@ import java.util.List;
  * Created by dllo on 17/3/9.
  */
 
+/**
+ * 视频详情界面-播放集数的适配器
+ */
 public class PlayStageAdapter extends RecyclerView.Adapter<PlayStageAdapter.PlayStageViewHolder> {
     private List<GameTalkMoreResponse> dataMore;
     private Context context;

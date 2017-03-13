@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.base.BaseFragment;
-import com.lanou.yindongge.music.pineapple.home.gametalk.HomeGameTalkFragment;
+import com.lanou.yindongge.music.pineapple.home.comment.HomeCommentFragment;
 import com.lanou.yindongge.music.pineapple.home.recommond.HomeRecommondFragment;
 import com.lanou.yindongge.music.pineapple.util.Contant;
 
@@ -21,6 +21,9 @@ import java.util.List;
  * Created by dllo on 17/2/18.
  */
 
+/**
+ * 首页fragment
+ */
 public class HomeFragment extends BaseFragment {
 
     private TabLayout tabLayout;
@@ -52,8 +55,6 @@ public class HomeFragment extends BaseFragment {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeRecommondFragment());
 
-//        fragments.add(new HomeGameTalkFragment());
-//        fragments.add(HomeCommentFragment.newInstance(Contant.HOME_GAME_TALK, "游戏杂谈"));
         // 复用的所有碎片
         fragments.add(HomeCommentFragment.newInstance(Contant.HOME_GAME_TALK, "游戏杂谈"));
         fragments.add(HomeCommentFragment.newInstance(Contant.HOME_LAUGH, "搞笑"));

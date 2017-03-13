@@ -34,12 +34,6 @@ public class GossipAdapter extends RecyclerView.Adapter<GossipAdapter.GossipImag
 
     private List<ZoneListBean.VideoSetListBean> gossipData;
 
-//    private OnGossipClickListener onGossipClickListener;
-//
-//    public void setOnGossipClickListener(OnGossipClickListener onGossipClickListener) {
-//        this.onGossipClickListener = onGossipClickListener;
-//        notifyDataSetChanged();
-//    }
 
     public GossipAdapter(Context context) {
         this.context = context;
@@ -58,14 +52,6 @@ public class GossipAdapter extends RecyclerView.Adapter<GossipAdapter.GossipImag
         lp.width = ScreenSizeUtils.getSreen(context, ScreenState.WIDTH) / 4;
         lp.height = ScreenSizeUtils.getSreen(context, ScreenState.HEIGHT) / 5;
         holder.gossipIv.setLayoutParams(lp);
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int pos = holder.getLayoutPosition();
-//                onGossipClickListener.onGossipClick(pos);
-//            }
-//        });
 
         return holder;
     }
@@ -90,9 +76,4 @@ public class GossipAdapter extends RecyclerView.Adapter<GossipAdapter.GossipImag
             gossipTv = (TextView)itemView.findViewById(R.id.gossip_image_text);
         }
     }
-
-//interface OnGossipClickListener {
-//    void onGossipClick(int position);
-//}
-
 }

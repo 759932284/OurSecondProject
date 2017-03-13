@@ -15,6 +15,9 @@ import com.lanou.yindongge.music.pineapple.base.BaseFragment;
  * Created by dllo on 17/2/18.
  */
 
+/**
+ * 首页-推荐页面
+ */
 public class HomeRecommondFragment extends BaseFragment {
 
     private RecyclerView recommondRec;

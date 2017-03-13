@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -136,6 +137,7 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 GossipHolder gossipHolder = (GossipHolder) holder;
                 gossipHolder.gossipTv.setText("游戏杂谈");
                 gossipHolder.gossipRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                gossipHolder.gossipIv.setImageResource(R.mipmap.home_navigation_main_p);
                 gossipHolder.gossipRv.setAdapter(gossipAdapter);
                 gossipAdapter.setGossipData(gossip);
                 break;
@@ -144,6 +146,7 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 FunHolder funHolder = (FunHolder) holder;
                 funHolder.funTv.setText("搞笑");
                 funHolder.funRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                funHolder.funIv.setImageResource(R.mipmap.home_navigation_mine_p);
                 funHolder.funRv.setAdapter(funAdapter);
                 funAdapter.setFunList(fun);
                 break;
@@ -152,6 +155,7 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 AnimHolder animHolder = (AnimHolder) holder;
                 animHolder.animTv.setText("动画");
                 animHolder.animRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                animHolder.animIv.setImageResource(R.mipmap.home_title_img_channel);
                 animHolder.animRv.setAdapter(animAdapter);
                 animAdapter.setAnimData(anim);
                 break;
@@ -176,30 +180,36 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class GossipHolder extends RecyclerView.ViewHolder {
         TextView gossipTv;
         RecyclerView gossipRv;
+        ImageView gossipIv;
         public GossipHolder(View itemView) {
             super(itemView);
             gossipRv = (RecyclerView) itemView.findViewById(R.id.gossip_rv);
             gossipTv = (TextView)itemView.findViewById(R.id.kind_tv);
+            gossipIv = (ImageView) itemView.findViewById(R.id.image_image);
         }
     }
 
     class FunHolder extends RecyclerView.ViewHolder {
         TextView funTv;
         RecyclerView funRv;
+        ImageView funIv;
         public FunHolder(View itemView) {
             super(itemView);
             funTv = (TextView)itemView.findViewById(R.id.kind_tv);
             funRv = (RecyclerView) itemView.findViewById(R.id.gossip_rv);
+            funIv = (ImageView) itemView.findViewById(R.id.image_image);
         }
     }
 
     class AnimHolder extends RecyclerView.ViewHolder {
         TextView animTv;
         RecyclerView animRv;
+        ImageView animIv;
         public AnimHolder(View itemView) {
             super(itemView);
             animTv = (TextView)itemView.findViewById(R.id.kind_tv);
             animRv = (RecyclerView) itemView.findViewById(R.id.gossip_rv);
+            animIv = (ImageView) itemView.findViewById(R.id.image_image);
         }
     }
 

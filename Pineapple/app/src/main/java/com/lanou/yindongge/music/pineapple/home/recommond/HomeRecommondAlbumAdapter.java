@@ -20,6 +20,9 @@ import java.util.List;
  * Created by dllo on 17/2/21.
  */
 
+/**
+ * 首页-推荐界面-菠萝专辑部分适配器
+ */
 public class HomeRecommondAlbumAdapter extends RecyclerView.Adapter<HomeRecommondAlbumAdapter.HomeRecommondAlbumViewHolder> {
 
     private Context context;

@@ -12,6 +12,10 @@ import java.util.Date;
  * Created by dllo on 17/3/4.
  */
 
+/**
+ * 广播类
+ * 拦截短信
+ */
 public class SMSBroadcastReceiver extends BroadcastReceiver {
     private static MessageListener mMessageListener;
     public static final String SMS_RECEIVED_ACTION = "android.provider.Telephony.SMS_RECEIVED";

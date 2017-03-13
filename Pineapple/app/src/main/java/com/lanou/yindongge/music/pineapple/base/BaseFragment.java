@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 /**
  * Created by dllo on 17/2/18.
+ *
+ * fragment  基类
  */
 
 public abstract class BaseFragment extends Fragment {
@@ -34,10 +36,12 @@ public abstract class BaseFragment extends Fragment {
     public abstract void initView(View view);
     public abstract void initData();
 
+    // 链接id
     public <V extends View> V byView(int resId) {
         return (V)view.findViewById(resId);
     }
 
+    // 传递context
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

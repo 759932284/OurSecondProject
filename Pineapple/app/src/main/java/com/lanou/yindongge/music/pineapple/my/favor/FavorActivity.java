@@ -26,6 +26,7 @@ public class FavorActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Override
     public void initData() {
+        // 单例数据库
         LiteOrm liteOrm = LiteOrm.newSingleInstance(this, "video.db");
         FavorAdapter favorAdapter = new FavorAdapter(this);
         lv = (ListView) findViewById(R.id.listView);
@@ -41,7 +42,6 @@ public class FavorActivity extends BaseActivity implements AdapterView.OnItemCli
         Intent intent = new Intent(this, PlayActivity.class);
         intent.putExtra("url", url);
         startActivity(intent);
-        Toast.makeText(this, "点点点", Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -40,11 +40,6 @@ import java.util.List;
 @SuppressLint({"HandlerLeak", "NewApi", "InflateParams"})
 public class CardFragment extends Fragment {
 
-    String videoUrl = "";
-    String imgUrl = "";
-
-
-
     private CardSwitchListener cardSwitchListener;
 
     private String imagePaths[] = {"assets://wall01.jpg",

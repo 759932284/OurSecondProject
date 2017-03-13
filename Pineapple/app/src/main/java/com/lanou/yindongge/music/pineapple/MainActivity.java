@@ -11,6 +11,9 @@ import com.lanou.yindongge.music.pineapple.home.HomeFragment;
 import com.lanou.yindongge.music.pineapple.hot.HotFragment;
 import com.lanou.yindongge.music.pineapple.my.MyFragment;
 
+/**
+ * 启动界面activity
+ */
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override

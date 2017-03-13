@@ -10,6 +10,9 @@ import java.util.List;
  * Created by dllo on 17/2/18.
  */
 
+/**
+ * 首页适配器
+ */
 public class HomeViewPagerAdapter extends FragmentPagerAdapter {
 
     private String[] title;

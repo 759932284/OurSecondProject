@@ -2,6 +2,7 @@ package com.lanou.yindongge.music.pineapple.my;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -34,13 +35,13 @@ import cn.smssdk.SMSSDK;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by dllo on 17/2/18.
- *
+ * <p>
  * 我的界面
  */
-
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, PlatformActionListener {
     private static final String[] AVATARS = new String[400];
@@ -56,6 +57,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
     private TextView qqTv;
     private LinearLayout map, wechat, weibo;
     private LinearLayout qqLl;
+    private SharedPreferences sp;
+    private String name;
 
     @Override
     public int getLayoutId() {
@@ -120,6 +123,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         //注册广播
         context.registerReceiver(mSMSBroadcastReceiver, intentFilter);
 
+        sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
+        name = sp.getString("name", "");
+        String icon = sp.getString("icon", "");
+        if (icon != "") {
+            ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context, icon, qqIv);
+            qqTv.setText(name);
+        } else{
+            qqTv.setText("QQ");
+            qqIv.setImageResource(R.mipmap.login_qq_n);
+        }
     }
 
     private Handler handler = new Handler() {
@@ -168,7 +181,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 VaildateputInfo();
                 break;
             case R.id.QQ:
-                mobQQLogin();
+                if (name.equals("QQ")) {
+                    mobQQLogin();
+                }
                 break;
             case R.id.weibo:
                 Toast.makeText(context, "当前版本过低, 请升级后再试", Toast.LENGTH_SHORT).show();
@@ -224,12 +239,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
             qqTv.setText(name);
             qqPlatform.removeAccount();
             Log.d("MyFragment", icon);
-
-//            sp = getSharedPreferences("login", MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putString("name", name);
-//            editor.putString("icon", icon);
-//            editor.commit();
+            sp = context.getSharedPreferences("login", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("name", name);
+            editor.putString("icon", icon);
+            editor.commit();
 
         } else {
             qqPlatform.setPlatformActionListener(this);//回调接口返回
@@ -250,6 +264,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 qqTv.setText(name);
                 ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context, icon, qqIv);
                 Log.d("MyFragment", name);
+                sp = context.getSharedPreferences("login", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("name", name);
+                editor.putString("icon", icon);
+                editor.commit();
             }
         });
     }
@@ -289,7 +308,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         oks.setSite("ShareSDK");
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://sharesdk.cn");
-// 启动分享GUI
+        // 启动分享GUI
         oks.show(context);
     }
 
@@ -385,79 +404,4 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         }
         return false;
     }
-
-//    private static final String NUMBER = "123456";
-//    private static final String PASSWORD = "123456";
-//    private LinearLayout scan, qq;
-//    private Button smsCode, login;
-//    private EditText number, password;
-//
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.fragment_my;
-//    }
-//
-//    @Override
-//    public void initView(View view) {
-//        scan = byView(R.id.scan);
-//        smsCode = byView(R.id.sms_code);
-//        login = byView(R.id.login);
-//        number = byView(R.id.number);
-//        password = byView(R.id.password);
-//        qq = byView(R.id.QQ);
-//    }
-//
-//    @Override
-//    public void initData() {
-//
-//        SMSSDK.initSDK(context, "1bc28ede6b21a",
-//                "81305c9fe8b947d7b6bf9c8847c6ec62");
-//
-//        setListener();
-//    }
-//
-//    private void setListener() {
-//        scan.setOnClickListener(this);
-//        smsCode.setOnClickListener(this);
-//        login.setOnClickListener(this);
-//    }
-//
-//
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.scan:
-//                startActivityForResult(new Intent(context, CaptureActivity.class), 0);
-//                break;
-//            case R.id.sms_code:
-//                //打开注册页面
-//                RegisterPage registerPage = new RegisterPage();
-//                registerPage.setRegisterCallback(new EventHandler() {
-//                    public void afterEvent(int event, int result, Object data) {
-//                        // 解析注册结果
-//                        if (result == SMSSDK.RESULT_COMPLETE) {
-//                            @SuppressWarnings("unchecked")
-//                            HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
-//                            String country = (String) phoneMap.get("country");
-//                            String phone = (String) phoneMap.get("phone");
-//                            // 提交用户信息（此方法可以不调用）
-////                            registerUser(country, phone);
-//                        }
-//                    }
-//                });
-//                registerPage.show(context);
-//                break;
-//            case R.id.login:
-//                String num = number.getText().toString();
-//                String psw = password.getText().toString();
-//                if (num.equals(NUMBER) && psw.equals(PASSWORD)) {
-//                    Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(context, "登录失败,账号或密码错误", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//            case R.id.QQ:
-//
-//        }
-//    }
 }

@@ -9,6 +9,9 @@ import com.squareup.picasso.Picasso;
  * Created by dllo on 17/2/24.
  */
 
+/**
+ * 毕加索管理器
+ */
 public class PicassoManager extends ImageManager {
     private PicassoManager() {
 
