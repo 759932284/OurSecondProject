@@ -5,30 +5,18 @@ package com.lanou.yindongge.music.pineapple.hot;
  */
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lanou.yindongge.music.pineapple.R;
-import com.lanou.yindongge.music.pineapple.bean.HotResponse;
 import com.lanou.yindongge.music.pineapple.detail.PlayActivity;
 import com.lanou.yindongge.music.pineapple.hot.CardSlidePanel.CardSwitchListener;
-import com.lanou.yindongge.music.pineapple.net.GlideManager;
-import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
-import com.lanou.yindongge.music.pineapple.net.OkHttpManager;
-import com.lanou.yindongge.music.pineapple.net.OnNetResultListener;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,32 +116,32 @@ public class CardFragment extends Fragment {
         }
 
 /*************   加加++++++++++    ************/
-        String url = "http://m.live.netease.com/bolo/api/rank/hotVideo.htm?type=LUNCKBREAK&userId=5702015542626208498";
-        int requestCode = 0;
-        OkHttpManager.getInstance().startGetRequest(url, 0, new OnNetResultListener() {
-            @Override
-            public void onSuccessListener(String result, int requestCode) {
-                Gson gson = new Gson();
-                List<FoodBean> foodData;
-                Type type = new TypeToken<List<FoodBean>>() {}.getType();
-                foodData = gson.fromJson(result, type);
+//        String url = "http://m.live.netease.com/bolo/api/rank/hotVideo.htm?type=LUNCKBREAK&userId=5702015542626208498";
+//        int requestCode = 0;
+//        OkHttpManager.getInstance().startGetRequest(url, 0, new OnNetResultListener() {
+//            @Override
+//            public void onSuccessListener(String result, int requestCode) {
+//                Gson gson = new Gson();
+//                List<FoodBean> foodData;
+//                Type type = new TypeToken<List<FoodBean>>() {}.getType();
+//                foodData = gson.fromJson(result, type);
 
-                for (int i = 0; i < foodData.size(); i++) {
-                    videoUrl = foodData.get(i).getLinkMp4();
-                    imgUrl = foodData.get(i).getCover();
-                }
+//                for (int i = 0; i < foodData.size(); i++) {
+//                    videoUrl = foodData.get(i).getLinkMp4();
+//                    imgUrl = foodData.get(i).getCover();
+//                }
 //                GlideManager.getGlideManager().loadImageView();
 //                Intent intent = new Intent(getContext(), PlayActivity.class);
 //                intent.putExtra("url", videoUrl);
 //                intent.putExtra("imgUrl", imgUrl);
 //                startActivity(intent);
-            }
-
-            @Override
-            public void onFailureListener(String errMsg) {
-
-            }
-        });
+//            }
+//
+//            @Override
+//            public void onFailureListener(String errMsg) {
+//
+//            }
+//        });
 
 
 //    @Override
