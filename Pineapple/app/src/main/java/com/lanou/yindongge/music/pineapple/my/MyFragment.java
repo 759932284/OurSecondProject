@@ -2,8 +2,7 @@ package com.lanou.yindongge.music.pineapple.my;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -22,7 +21,6 @@ import com.lanou.yindongge.music.pineapple.base.BaseFragment;
 import com.lanou.yindongge.music.pineapple.my.favor.FavorActivity;
 import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
-import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -55,6 +53,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
     private ImageView qqIv;
     private TextView qqTv;
+    private SharedPreferences sp;
+    private String icon;
+    private String name;
 
     @Override
     public int getLayoutId() {
@@ -71,8 +72,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         getCodeBtn = byView(R.id.sms_code);
         codeEt = byView(R.id.sms_code_et);
         commitBtn = byView(R.id.login);
+
         LinearLayout qqLl = (LinearLayout) view.findViewById(R.id.QQ);
         LinearLayout weiboLl = (LinearLayout) view.findViewById(R.id.weibo);
+
+//        // 连接id
+//        ImageView qqIv =  (ImageView)view.findViewById(R.id.qq_iv);
+//        TextView qqTv =  (TextView)view.findViewById(R.id.qq_tv);
+
         qqLl.setOnClickListener(this);
         weiboLl.setOnClickListener(this);
         qqIv = byView(R.id.qq_iv);
@@ -86,6 +93,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         shareLl.setOnClickListener(this);
 
     }
+
 
     @Override
     public void initData() {
@@ -115,6 +123,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         intentFilter.setPriority(Integer.MAX_VALUE);
         //注册广播
         context.registerReceiver(mSMSBroadcastReceiver, intentFilter);
+
+
+        sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
+        name = sp.getString("name", "");
+        icon = sp.getString("icon", "");
+        if (icon != "") {
+            ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context, icon, qqIv);
+            qqTv.setText(name);
+        } else{
+            qqTv.setText("QQ");
+            qqIv.setImageResource(R.mipmap.login_qq_n);
+        }
+
+
 
     }
 
@@ -165,7 +187,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 break;
 
             case R.id.QQ:
-                mobQQLogin();
+                if (name.equals("QQ")) {
+                    mobQQLogin();
+                }
+
                 break;
             case R.id.weibo:
                 mobWeiBoLogin();
@@ -219,6 +244,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
             String icon = qqPlatform.getDb().getUserIcon();
             qqTv.setText(name);
             qqPlatform.removeAccount();
+
+            sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("name", name);
+            editor.putString("icon", icon);
+            editor.commit();
+
             Log.d("MyFragment", icon);
 
 //            sp = getSharedPreferences("login", MODE_PRIVATE);
@@ -246,6 +278,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 qqTv.setText(name);
                 ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context, icon, qqIv);
                 Log.d("MyFragment", name);
+
+                sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("name", name);
+                editor.putString("icon", icon);
+                editor.commit();
             }
         });
     }

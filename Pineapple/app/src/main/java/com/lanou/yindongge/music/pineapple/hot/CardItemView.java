@@ -2,7 +2,6 @@ package com.lanou.yindongge.music.pineapple.hot;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +16,9 @@ import com.facebook.rebound.SpringSystem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lanou.yindongge.music.pineapple.R;
-import com.lanou.yindongge.music.pineapple.detail.PlayActivity;
-import com.lanou.yindongge.music.pineapple.net.GlideManager;
+import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
 import com.lanou.yindongge.music.pineapple.net.OkHttpManager;
 import com.lanou.yindongge.music.pineapple.net.OnNetResultListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -124,9 +121,10 @@ public class CardItemView extends FrameLayout {
                 String imgUrl = "";
                 for (int i = 0; i < foodData.size(); i++) {
                     videoUrl = foodData.get(i).getLinkMp4();
-                    imgUrl = foodData.get(1).getCover();
-                    ImageLoader.getInstance().displayImage(imgUrl, imageView);
-//                    GlideManager.getGlideManager().loadImageView(getContext(), imgUrl, imageView);
+                    imgUrl = foodData.get(i).getCover();
+                 //   ImageLoader.getInstance().displayImage(imgUrl, imageView);
+                    ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(getContext(), imgUrl,imageView );
+//                    GlideManager.getGlideManager().loadImageiew(getContext(), imgUrl, imageView);
 
                 }
 //                Intent intent = new Intent(getContext(), PlayActivity.class);

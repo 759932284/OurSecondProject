@@ -79,9 +79,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".detail.PlayDetailActivity" />
+
         <activity android:name=".detail.PlayActivity" />
         <activity android:name=".my.favor.FavorActivity" />
         <activity android:name=".my.WebViewActivity"></activity>
+
+
     </application>
 
 </manifest>
