@@ -2,8 +2,6 @@ package com.lanou.yindongge.music.pineapple.my;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -22,7 +20,6 @@ import com.lanou.yindongge.music.pineapple.base.BaseFragment;
 import com.lanou.yindongge.music.pineapple.my.favor.FavorActivity;
 import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
-import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -84,7 +81,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         // 分享链接id
         LinearLayout shareLl = (LinearLayout) view.findViewById(R.id.share);
         shareLl.setOnClickListener(this);
-
     }
 
     @Override
@@ -183,6 +179,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         }
     }
 
+    // 扫描成功
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

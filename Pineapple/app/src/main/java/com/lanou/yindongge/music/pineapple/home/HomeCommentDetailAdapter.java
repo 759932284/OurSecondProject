@@ -101,16 +101,6 @@ public class HomeCommentDetailAdapter extends RecyclerView.Adapter<HomeCommentDe
         holder.commentDetailTitleTv.setText(dataDeatail.get(position).getTitle());
         holder.commentDetailAuthorTv.setText(dataDeatail.get(position).getChannelName());
 
-//        WindowManager windowManager = ((Activity) context).getWindowManager();
-//        // 适应屏幕宽高
-//        Display display = windowManager.getDefaultDisplay();
-//        int screenWidth = display.getWidth();
-//        int screenHeight = display.getHeight();
-//        Glide.with(context)
-//                .load(dataDeatail.get(position - 1).getAvatar())
-//                .override(screenWidth / 2, screenHeight / 3)
-//                .into(holder.commentDetailIv);
-
         ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context,
                 dataDeatail.get(position - 1).getAvatar(), holder.commentDetailIv);
 
@@ -122,9 +112,6 @@ public class HomeCommentDetailAdapter extends RecyclerView.Adapter<HomeCommentDe
                 onClickCommenListener.onClickCommen(pos);
             }
         });
-
-//                dataDeatail.get(position).getCover(), holder.commentDetailIv);
-
     }
 
     @Override

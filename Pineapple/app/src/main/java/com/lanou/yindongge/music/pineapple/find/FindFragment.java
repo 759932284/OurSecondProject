@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -53,6 +54,7 @@ public class FindFragment extends BaseFragment {
     @Override
     public void initData() {
 
+
         findAdapter = new FindAdapter(context);
         rv.setLayoutManager(new LinearLayoutManager(context));
         rv.setAdapter(findAdapter);
@@ -89,7 +91,7 @@ public class FindFragment extends BaseFragment {
 
             @Override
             public void onFailureListener(String errMsg) {
-
+                Toast.makeText(context, "失败" + errMsg, Toast.LENGTH_SHORT).show();
             }
         });
 

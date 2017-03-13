@@ -87,4 +87,6 @@ public class Contant {
     public static final int GAME_TALK_MORE_REQUESTCODE = index++;
     //
     public static final int HOT = index++;
+
+
 }

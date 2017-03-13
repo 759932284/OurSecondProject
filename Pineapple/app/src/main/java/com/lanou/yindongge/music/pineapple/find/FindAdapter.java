@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lanou.yindongge.music.pineapple.R;
-import com.lanou.yindongge.music.pineapple.detail.PlayActivity;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int GOSSIP = 1;
     private static final int FUN = 2;
     private static final int ANIM = 3;
+
 
 
     public FindAdapter(Context context) {
@@ -79,6 +82,14 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case SEARCH:
                 itemView = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false);
                 holder = new SearchHolder(itemView);
+//                searchAdapter.setOnSearchTagClickListener(new SearchAdapter.OnSearchTagClickListener() {
+//                    @Override
+//                    public void onSearchTagClick(int position) {
+//                        Intent intent = new Intent(context, SearchTagActivity.class);
+//                        intent.putExtra("searchTag", searchDatas.get(position).getKeyword());
+//                        context.startActivity(intent);
+//                    }
+//                });
                 break;
             case GOSSIP:
                 itemView = LayoutInflater.from(context).inflate(R.layout.item_gossip, parent, false);
@@ -97,15 +108,34 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         switch (viewType) {
             case SEARCH:
                 SearchAdapter searchAdapter = new SearchAdapter(context);
-                SearchHolder searchHolder = (SearchHolder) holder;
+                final SearchHolder searchHolder = (SearchHolder) holder;
                 searchHolder.searchRv.setLayoutManager(new GridLayoutManager(context, 3));
                 searchHolder.searchRv.setAdapter(searchAdapter);
                 searchAdapter.setSearchList(searchDatas);
+                // 上方搜索点击事件
+                searchHolder.findSearch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        context.startActivity(new Intent(context, SearchTagActivity.class));
+                    }
+                });
+
+                searchAdapter.setOnSearchTagClickListener(new SearchAdapter.OnSearchTagClickListener() {
+                    @Override
+                    public void onSearchTagClick(int position) {
+                        Intent intent = new Intent(context, SearchTagActivity.class);
+                        String tag = searchDatas.get(position).getKeyword();
+                        Log.d("FindAdapter", "-->" + tag);
+                        intent.putExtra("searchTag", searchDatas.get(position).getKeyword());
+                        context.startActivity(intent);
+                    }
+                });
+
                 break;
             case GOSSIP:
                 GossipAdapter gossipAdapter = new GossipAdapter(context);
@@ -114,13 +144,6 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 gossipHolder.gossipRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
                 gossipHolder.gossipRv.setAdapter(gossipAdapter);
                 gossipAdapter.setGossipData(gossip);
-//                gossipAdapter.setOnGossipClickListener(new GossipAdapter.OnGossipClickListener() {
-//                    @Override
-//                    public void onGossipClick(int position) {
-//                        context.startActivity(new Intent(context, PlayActivity.class));
-//                        String url = gossip.get(position).getVideoId()
-//                    }
-//                });
                 break;
             case FUN:
                 FunAdapter funAdapter = new FunAdapter(context);
@@ -147,9 +170,11 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     class SearchHolder extends RecyclerView.ViewHolder {
+        LinearLayout findSearch;
         RecyclerView searchRv;
         public SearchHolder(View itemView) {
             super(itemView);
+            findSearch = (LinearLayout) itemView.findViewById(R.id.find_search);
             searchRv = (RecyclerView) itemView.findViewById(R.id.search_rv);
         }
     }
@@ -183,4 +208,6 @@ public class FindAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             animRv = (RecyclerView) itemView.findViewById(R.id.gossip_rv);
         }
     }
+
+
 }

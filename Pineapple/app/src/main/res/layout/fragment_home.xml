@@ -8,6 +8,8 @@
         android:id="@+id/tabLayout"
         android:background="#FFAF1A"
         app:tabMode="scrollable"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <android.support.v4.view.ViewPager

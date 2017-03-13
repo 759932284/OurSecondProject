@@ -95,15 +95,6 @@ public class CardFragment extends Fragment {
             @Override
             public void onItemClick(View cardView, int index) {
                 Log.d("CardFragment", "卡片点击-" + dataList.get(index).userName);
-                cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), PlayActivity.class);
-                        intent.putExtra("url", videoUrl);
-                        Log.d("asd", "123:" + 123);
-                        getContext().startActivity(intent);
-                    }
-                });
             }
         };
         slidePanel.setCardSwitchListener(cardSwitchListener);
@@ -126,60 +117,5 @@ public class CardFragment extends Fragment {
                 dataList.add(dataItem);
             }
         }
-
-/*************   加加++++++++++    ************/
-        String url = "http://m.live.netease.com/bolo/api/rank/hotVideo.htm?type=LUNCKBREAK&userId=5702015542626208498";
-        int requestCode = 0;
-        OkHttpManager.getInstance().startGetRequest(url, 0, new OnNetResultListener() {
-            @Override
-            public void onSuccessListener(String result, int requestCode) {
-                Gson gson = new Gson();
-                List<FoodBean> foodData;
-                Type type = new TypeToken<List<FoodBean>>() {}.getType();
-                foodData = gson.fromJson(result, type);
-
-                for (int i = 0; i < foodData.size(); i++) {
-                    videoUrl = foodData.get(i).getLinkMp4();
-                    imgUrl = foodData.get(i).getCover();
-                }
-//                GlideManager.getGlideManager().loadImageView();
-//                Intent intent = new Intent(getContext(), PlayActivity.class);
-//                intent.putExtra("url", videoUrl);
-//                intent.putExtra("imgUrl", imgUrl);
-//                startActivity(intent);
-            }
-
-            @Override
-            public void onFailureListener(String errMsg) {
-
-            }
-        });
-
-
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//        String url = "http://m.live.netease.com/bolo/api/rank/hotVideo.htm?type=LUNCKBREAK&userId=5702015542626208498";
-//        int requestCode = 0;
-//        OkHttpManager.getInstance().startGetRequest(url, 0, new OnNetResultListener() {
-//            @Override
-//            public void onSuccessListener(String result, int requestCode) {
-//                Gson gson = new Gson();
-//                List<FoodBean> foodData;
-//                Type type = new TypeToken<List<FoodBean>>(){}.getType();
-//                foodData = gson.fromJson(result, type);
-//                FoodBean fb = new FoodBean();
-//                fb = foodData.get(0);
-//                Log.d("CardFragment", fb.getLinkMp4());
-//            }
-//
-//            @Override
-//            public void onFailureListener(String errMsg) {
-//
-//            }
-//        });
-//
-//    }
     }
 }

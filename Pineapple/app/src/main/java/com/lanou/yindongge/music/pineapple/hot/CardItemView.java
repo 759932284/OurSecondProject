@@ -100,47 +100,10 @@ public class CardItemView extends FrameLayout {
     }
 
     public void fillData(final CardDataItem itemData) {
-//        ImageLoader.getInstance().displayImage(itemData.imagePath, imageView);
+        ImageLoader.getInstance().displayImage(itemData.imagePath, imageView);
         userNameTv.setText(itemData.userName);
         imageNumTv.setText(itemData.imageNum + "");
         likeNumTv.setText(itemData.likeNum + "");
-
-        /***************   后加的+++  **********************/
-
-//        String imgUrl = "http://bobo-public.nosdn.127.net/bobo_1487388170363_54933000.jpg";
-//        GlideManager.getGlideManager().loadImageView(getContext(), imgUrl, imageView);
-
-        String url = "http://m.live.netease.com/bolo/api/rank/hotVideo.htm?type=LUNCKBREAK&userId=5702015542626208498";
-        int requestCode = 0;
-        OkHttpManager.getInstance().startGetRequest(url, 0, new OnNetResultListener() {
-            @Override
-            public void onSuccessListener(String result, int requestCode) {
-                Gson gson = new Gson();
-                List<FoodBean> foodData;
-                Type type = new TypeToken<List<FoodBean>>() {}.getType();
-                foodData = gson.fromJson(result, type);
-                Log.d("CardItemView", "foodData.size():" + foodData.size());
-
-                String imgUrl = "";
-                for (int i = 0; i < foodData.size(); i++) {
-                    videoUrl = foodData.get(i).getLinkMp4();
-                    imgUrl = foodData.get(1).getCover();
-                    ImageLoader.getInstance().displayImage(imgUrl, imageView);
-//                    GlideManager.getGlideManager().loadImageView(getContext(), imgUrl, imageView);
-
-                }
-//                Intent intent = new Intent(getContext(), PlayActivity.class);
-//                intent.putExtra("url", videoUrl);
-////                intent.putExtra("imgUrl", imgUrl);
-//                startActivity(intent);
-            }
-
-            @Override
-            public void onFailureListener(String errMsg) {
-
-            }
-        });
-
 
     }
 
