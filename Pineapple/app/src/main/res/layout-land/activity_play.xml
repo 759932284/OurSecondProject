@@ -29,8 +29,8 @@
             <ProgressBar
                 android:id="@+id/probar"
                 style="?android:attr/progressBarStyleLarge"
-                android:layout_width="@dimen/a"
-                android:layout_height="@dimen/a" />
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
 
             <TextView
                 android:id="@+id/download_rate"
@@ -51,7 +51,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_margin="@dimen/b"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -61,7 +61,7 @@
             android:src="@mipmap/ic_hot_commemts"/>
         <TextView
             android:id="@+id/detail_comment_tv"
-            android:layout_marginStart="@dimen/c"
+            android:layout_marginStart="5dp"
             android:layout_toRightOf="@+id/detail_comment_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -164,5 +164,4 @@
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

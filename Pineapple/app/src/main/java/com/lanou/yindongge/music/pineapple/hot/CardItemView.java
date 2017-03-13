@@ -2,7 +2,6 @@ package com.lanou.yindongge.music.pineapple.hot;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +16,7 @@ import com.facebook.rebound.SpringSystem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lanou.yindongge.music.pineapple.R;
-import com.lanou.yindongge.music.pineapple.detail.PlayActivity;
-import com.lanou.yindongge.music.pineapple.net.GlideManager;
+import com.lanou.yindongge.music.pineapple.net.ImageManagerFactory;
 import com.lanou.yindongge.music.pineapple.net.OkHttpManager;
 import com.lanou.yindongge.music.pineapple.net.OnNetResultListener;
 import com.nostra13.universalimageloader.core.ImageLoader;

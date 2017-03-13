@@ -40,12 +40,12 @@ public class PlayRecommondAdapter extends RecyclerView.Adapter<PlayRecommondAdap
     @Override
     public PlayRecommondViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_play_more_recommond, null);
-        PlayRecommondViewHolder holder = new PlayRecommondViewHolder(view);
+        final PlayRecommondViewHolder holder = new PlayRecommondViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(PlayRecommondViewHolder holder, int position) {
+    public void onBindViewHolder(PlayRecommondViewHolder holder, final int position) {
         holder.moreRecommondIv.setImageResource(R.mipmap.ic_launcher);
         holder.moreRecommondTitle.setText(dataMore.get(position).getTitle());
         holder.moreRecommondAuthor.setText(dataMore.get(position).getChannelName());
@@ -56,6 +56,7 @@ public class PlayRecommondAdapter extends RecyclerView.Adapter<PlayRecommondAdap
         lp.width = ScreenSizeUtils.getSreen(context, ScreenState.WIDTH) / 5 * 2;
         lp.height = ScreenSizeUtils.getSreen(context, ScreenState.HEIGHT) / 6;
         holder.moreRecommondIv.setLayoutParams(lp);
+
     }
 
     @Override

@@ -58,6 +58,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
     private LinearLayout map, wechat, weibo;
     private LinearLayout qqLl;
     private SharedPreferences sp;
+    private String icon;
     private String name;
 
     @Override
@@ -77,6 +78,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         commitBtn = byView(R.id.login);
         qqLl = (LinearLayout) view.findViewById(R.id.QQ);
         weibo = (LinearLayout) view.findViewById(R.id.weibo);
+
+        LinearLayout qqLl = (LinearLayout) view.findViewById(R.id.QQ);
+        LinearLayout weiboLl = (LinearLayout) view.findViewById(R.id.weibo);
+
+
         qqLl.setOnClickListener(this);
         weibo.setOnClickListener(this);
         qqIv = byView(R.id.qq_iv);
@@ -93,6 +99,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         LinearLayout shareLl = (LinearLayout) view.findViewById(R.id.share);
         shareLl.setOnClickListener(this);
     }
+
 
     @Override
     public void initData() {
@@ -123,9 +130,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
         //注册广播
         context.registerReceiver(mSMSBroadcastReceiver, intentFilter);
 
+
         sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
         name = sp.getString("name", "");
-        String icon = sp.getString("icon", "");
+        icon = sp.getString("icon", "");
         if (icon != "") {
             ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context, icon, qqIv);
             qqTv.setText(name);
@@ -238,12 +246,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
             String icon = qqPlatform.getDb().getUserIcon();
             qqTv.setText(name);
             qqPlatform.removeAccount();
-            Log.d("MyFragment", icon);
-            sp = context.getSharedPreferences("login", MODE_PRIVATE);
+
+            sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("name", name);
             editor.putString("icon", icon);
             editor.commit();
+
 
         } else {
             qqPlatform.setPlatformActionListener(this);//回调接口返回
@@ -264,7 +273,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Pl
                 qqTv.setText(name);
                 ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context, icon, qqIv);
                 Log.d("MyFragment", name);
-                sp = context.getSharedPreferences("login", MODE_PRIVATE);
+
+                sp = context.getSharedPreferences("login", context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString("name", name);
                 editor.putString("icon", icon);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -71,13 +70,13 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     private ImageView shareIv, downIv;
     private TextView detailTitleTv;
 
-    // 记录切换横竖屏播放的记录1
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        this.savedInstanceState = savedInstanceState;
-        super.onCreate(savedInstanceState);
-        //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
+//    // 记录切换横竖屏播放的记录1
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        this.savedInstanceState = savedInstanceState;
+//        super.onCreate(savedInstanceState);
+//        //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//    }
 
     @Override
     public int getLayoutId() {
@@ -87,7 +86,7 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     private void initView() {
         detailTitleTv = byView(R.id.detail_title_tv);
 
-        shareIv = byView(R.id.detail_share_iv);
+        shareIv = (ImageView)findViewById(R.id.detail_share_iv);
         shareIv.setOnClickListener(this);
         saveIv = byView(R.id.detail_store_iv);
         saveIv.setOnClickListener(this);
@@ -114,15 +113,13 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         qb.where("title = ?", new Object[]{title});
         listQuery = liteOrm.query(qb);
         if (listQuery.size() > 0) {
-            if (saveIv != null) {
                 saveIv.setImageResource(R.mipmap.video_player_favored);
-            }
-
         }
     }
 
     @Override
     public void initData() {
+        initView();
         // 创建数据库
         liteOrm = LiteOrm.newSingleInstance(this, "video.db");
         mCustomMediaController = new CustomMediaController(this, mVideoView, this);
@@ -147,29 +144,25 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 //        if (!LibsChecker.checkVitamioLibs(this)) {
 //            return;
 //        }
-        // 记录切换横竖屏播放的记录
+// 记录切换横竖屏播放的记录
 
         if (savedInstanceState != null) {
             pos = savedInstanceState.getLong(KEY_POS, 0);
             Log.d("PlayActivity", "456:" + pos);
         }
 
-        initView();
         initDatas();
-
-        // 创建更新至多少集的适配器,并传入数据
-//        PlayStageAdapter playStageAdapter =  new PlayStageAdapter(this);
         // 网络请求多少集的数据
         OkHttpManager.getInstance().startGetRequest(Contant.GAME_TALK_MORE, Contant.GAME_TALK_MORE_REQUESTCODE, this);
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-
-        outState.putLong(KEY_POS, mVideoView.getCurrentPosition());
-        super.onSaveInstanceState(outState);
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//
+//        outState.putLong(KEY_POS, mVideoView.getCurrentPosition());
+//        super.onSaveInstanceState(outState);
+//    }
 
     private void initDatas() {
         uri = Uri.parse(path);
@@ -236,10 +229,10 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-//        //屏幕切换时，设置全屏
-//        if (mVideoView != null){
-//            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_FIT_PARENT, 0);
-//        }
+        //屏幕切换时，设置全屏
+        if (mVideoView != null){
+            mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_FIT_PARENT, 0);
+        }
         super.onConfigurationChanged(newConfig);
     }
 
@@ -334,6 +327,6 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
 
     @Override
     public void onFailureListener(String errMsg) {
-
+        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
     }
 }
