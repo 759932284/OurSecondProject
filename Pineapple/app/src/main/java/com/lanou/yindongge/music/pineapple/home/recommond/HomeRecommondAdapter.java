@@ -36,6 +36,9 @@ import java.util.List;
  * Created by dllo on 17/2/18.
  */
 
+/**
+ * 首页-推荐页面适配器
+ */
 public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetResultListener {
     private Context context;
     private HomeRecommondBacteriaAdapter bacteriaAdapter;
@@ -45,6 +48,12 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
     private HomeRecommondAlbumViewHolder holderAlbum;
     private HomeRecommondRecommondAdapter recommondAdapter;
     private RotateAdapter rotateAdapter;
+    private static final int BANNER = 0;
+    private static final int BACTERIA = 1;
+    private static final int POPULAR = 2;
+    private static final int GAME_TALK = 3;
+    private static final int ALBUM = 4;
+    private static final int RECOMMOND = 5;
 
     public HomeRecommondAdapter(Context context) {
         this.context = context;
@@ -54,31 +63,31 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         switch (viewType) {
-            case 0:
+            case BANNER:
                 View viewHead = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_head, null);
                 holder = new HomeRecommondHeadViewHolder(viewHead);
                 break;
-            case 1:
+            case BACTERIA:
                 // Bacteria 菌
                 View viewBacteria = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_bacteria, null);
                 holder = new HomeRecommondBacteriaViewHolder(viewBacteria);
                 break;
-            case 2:
+            case POPULAR:
                 // 人气周榜
                 View viewPopular = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_popular, null);
                 holder = new HomeRecommondPopularViewHolder(viewPopular);
                 break;
-            case 3:
+            case GAME_TALK:
                 // 游戏杂谈
                 View viewGame = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_game, null);
                 holder = new HomeRecommondGameViewHolder(viewGame);
                 break;
-            case 4:
+            case ALBUM:
                 // 菠萝专辑
                 View viewAlbum = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_album, null);
                 holder = new HomeRecommondAlbumViewHolder(viewAlbum);
                 break;
-            case 5:
+            case RECOMMOND:
                 // 为您推荐
                 View viewRecommond = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_recommond, null);
                 holder = new HomeRecommondRecommondHolder(viewRecommond);
@@ -96,7 +105,7 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
 
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case 0:
+            case BANNER:
 
                 final HomeRecommondHeadViewHolder holderHead = (HomeRecommondHeadViewHolder) holder;
                 final RotateAdapter rotateAdapter = new RotateAdapter(context);
@@ -141,7 +150,7 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
                     }
                 });
                 break;
-            case 1:
+            case BACTERIA:
                 HomeRecommondBacteriaViewHolder holderBacteria = (HomeRecommondBacteriaViewHolder) holder;
                 holderBacteria.bacteriaTv.setText("菠萝菌力荐");
                 bacteriaAdapter = new HomeRecommondBacteriaAdapter(context);
@@ -151,7 +160,7 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
                         LinearLayoutManager.VERTICAL, false));
                 holderBacteria.bacteriaRv.setAdapter(bacteriaAdapter);
                 break;
-            case 2:
+            case POPULAR:
                 HomeRecommondPopularViewHolder holderPopular = (HomeRecommondPopularViewHolder) holder;
                 holderPopular.popularTv.setText("人气周榜");
                 popularAdapter = new HomeRecommondPopularAdapter(context);
@@ -161,7 +170,7 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
                         LinearLayoutManager.HORIZONTAL, false));
                 holderPopular.popularRv.setAdapter(popularAdapter);
                 break;
-            case 3:
+            case GAME_TALK:
                 View gameHeaderView = LayoutInflater.from(context).inflate(R.layout.item_home_header, null);
                 HomeRecommondGameViewHolder holderGame = (HomeRecommondGameViewHolder) holder;
                 holderGame.gameTv.setText("游戏杂谈");
@@ -178,7 +187,7 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
                 holderGame.gameRv.setLayoutManager(gameManager);
                 holderGame.gameRv.setAdapter(gameAdapter);
                 break;
-            case 4:
+            case ALBUM:
                 holderAlbum = (HomeRecommondAlbumViewHolder) holder;
                 holderAlbum.albumTv.setText("菠萝专辑");
                 // 获取网络图片后,用解析工具铺建
@@ -189,7 +198,7 @@ public class HomeRecommondAdapter extends RecyclerView.Adapter implements OnNetR
                         LinearLayoutManager.HORIZONTAL, false));
                 holderAlbum.albumRv.setAdapter(albumAdapter);
                 break;
-            case 5:
+            case RECOMMOND:
                 HomeRecommondRecommondHolder holderRecommond = (HomeRecommondRecommondHolder) holder;
                 holderRecommond.recommondTv.setText("为您推荐");
                 recommondAdapter = new HomeRecommondRecommondAdapter(context);

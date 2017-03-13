@@ -28,11 +28,6 @@ import java.util.List;
 @SuppressLint({"HandlerLeak", "NewApi", "InflateParams"})
 public class CardFragment extends Fragment {
 
-    String videoUrl = "";
-    String imgUrl = "";
-
-
-
     private CardSwitchListener cardSwitchListener;
 
     private String imagePaths[] = {"assets://wall01.jpg",
@@ -83,15 +78,6 @@ public class CardFragment extends Fragment {
             @Override
             public void onItemClick(View cardView, int index) {
                 Log.d("CardFragment", "卡片点击-" + dataList.get(index).userName);
-                cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), PlayActivity.class);
-                        intent.putExtra("url", videoUrl);
-                        Log.d("asd", "123:" + 123);
-                        getContext().startActivity(intent);
-                    }
-                });
             }
         };
         slidePanel.setCardSwitchListener(cardSwitchListener);

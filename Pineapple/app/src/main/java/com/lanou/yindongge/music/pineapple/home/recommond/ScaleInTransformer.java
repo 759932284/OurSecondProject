@@ -9,6 +9,9 @@ import android.view.View;
  * Created by dllo on 17/2/23.
  */
 
+/**
+ * 轮播图切换图片的特效类
+ */
 public class ScaleInTransformer extends BasePageTransformer {
     private static final float DEFAULT_MIN_SCALE = 0.85f;
     private float mMinScale = DEFAULT_MIN_SCALE;

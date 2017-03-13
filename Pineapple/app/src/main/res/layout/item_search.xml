@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/find_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:textSize="13sp"
             android:textColor="#ffffff"
+            android:layout_marginLeft="5dp"
             android:text="大家都在搜"/>
 
         <android.support.v7.widget.RecyclerView

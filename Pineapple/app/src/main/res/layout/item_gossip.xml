@@ -9,20 +9,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/image_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:src="@mipmap/home_navigation_hot_n"/>
         <TextView
             android:id="@+id/kind_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"/>
+            android:layout_gravity="center"
+            android:text="123456"/>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gossip_rv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -6,4 +6,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="card_image_width">312dp</dimen>
     <dimen name="card_image_height">220dp</dimen>
+
+    <dimen name="a">50dp</dimen>
+    <dimen name="b">10dp</dimen>
+    <dimen name="c">10dp</dimen>
 </resources>

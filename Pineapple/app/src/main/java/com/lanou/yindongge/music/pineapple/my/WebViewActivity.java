@@ -23,9 +23,9 @@ public class WebViewActivity extends BaseActivity {
 
 
 
-        // 设置相关的webview参数
-        WebSettings set = webView.getSettings();
-        // 设置能否加载js脚本
-        set.setJavaScriptEnabled(true);
+//        // 设置相关的webview参数
+//        WebSettings set = webView.getSettings();
+//        // 设置能否加载js脚本
+//        set.setJavaScriptEnabled(true);
     }
 }

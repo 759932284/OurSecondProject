@@ -19,7 +19,9 @@ import java.util.List;
 /**
  * Created by dllo on 17/2/21.
  */
-
+/**
+ * 首页-推荐界面-为您推荐部分适配器
+ */
 public class HomeRecommondRecommondAdapter extends RecyclerView.Adapter<HomeRecommondRecommondAdapter.HomeRecommondRecommondViewHolder> {
 
     private Context context;

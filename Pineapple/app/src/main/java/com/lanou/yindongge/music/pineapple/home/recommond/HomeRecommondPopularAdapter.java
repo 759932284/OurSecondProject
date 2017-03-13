@@ -19,7 +19,9 @@ import java.util.List;
 /**
  * Created by dllo on 17/2/21.
  */
-
+/**
+ * 首页-推荐界面-人气周榜部分适配器
+ */
 public class HomeRecommondPopularAdapter extends RecyclerView.Adapter<HomeRecommondPopularAdapter.HomeRecommondPopularViewHolder> {
 
     private Context context;

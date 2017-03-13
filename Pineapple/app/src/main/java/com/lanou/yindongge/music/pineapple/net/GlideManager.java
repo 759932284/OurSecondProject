@@ -10,6 +10,9 @@ import com.lanou.yindongge.music.pineapple.R;
  * Created by dllo on 17/2/24.
  */
 
+/**
+ * Glide管理器
+ */
 public class GlideManager extends ImageManager {
     // 单例
     // 构造方法私有化

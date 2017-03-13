@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * Created by dllo on 17/2/23.
+ *
+ * 动画
  */
 
 public class AnimAdapter extends RecyclerView.Adapter<AnimAdapter.AnimImageHolder> {

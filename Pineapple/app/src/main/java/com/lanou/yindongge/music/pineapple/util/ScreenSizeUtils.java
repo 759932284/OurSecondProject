@@ -8,6 +8,9 @@ import android.view.WindowManager;
  * Created by dllo on 17/2/27.
  */
 
+/**
+ * 屏幕适配工具
+ */
 public class ScreenSizeUtils {
     public static int getSreen(Context context, ScreenState state){
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

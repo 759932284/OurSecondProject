@@ -1,4 +1,4 @@
-package com.lanou.yindongge.music.pineapple.home;
+package com.lanou.yindongge.music.pineapple.home.comment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +20,16 @@ import java.util.List;
  * Created by dllo on 17/2/25.
  */
 
+/**
+ * 首页通用fragment详情适配器
+ */
 public class HomeCommentDetailAdapter extends RecyclerView.Adapter<HomeCommentDetailAdapter.HomeCommentDetailViewHolder> {
 
     private Context context;
     private View commentHeaderView;
     private List<HomeGameTalkResponse.VideoListBean> dataDeatail;
-
+    private static final int HEAD = 0;
+    private static final int DETAIL = 1;
 
     /********************    点击事件    *********************************************/
     private HomeCommentDetailAdapter.OnClickCommenListener onClickCommenListener;
@@ -49,23 +53,23 @@ public class HomeCommentDetailAdapter extends RecyclerView.Adapter<HomeCommentDe
     @Override
     public int getItemViewType(int position) {
         if (isHeader(position)) {
-            return 0;
+            return HEAD;
         }
-        else return 1;
+        else return DETAIL;
     }
 
     @Override
     public HomeCommentDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         HomeCommentDetailViewHolder holder = null;
         switch (viewType) {
-            case 0:
+            case HEAD:
                 holder = new HomeCommentDetailViewHolder(commentHeaderView);
                 ViewGroup.LayoutParams lpHeader = holder.commentHeaderIv.getLayoutParams();
                 lpHeader.width = ScreenSizeUtils.getSreen(context, ScreenState.WIDTH);
                 lpHeader.height = ScreenSizeUtils.getSreen(context, ScreenState.HEIGHT) / 3;
                 holder.commentHeaderIv.setLayoutParams(lpHeader);
                 break;
-            case 1:
+            case DETAIL:
                 View view = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_game_detail, null);
                 holder = new HomeCommentDetailViewHolder(view);
                 ViewGroup.LayoutParams lp = holder.commentDetailIv.getLayoutParams();
@@ -101,16 +105,6 @@ public class HomeCommentDetailAdapter extends RecyclerView.Adapter<HomeCommentDe
         holder.commentDetailTitleTv.setText(dataDeatail.get(position).getTitle());
         holder.commentDetailAuthorTv.setText(dataDeatail.get(position).getChannelName());
 
-//        WindowManager windowManager = ((Activity) context).getWindowManager();
-//        // 适应屏幕宽高
-//        Display display = windowManager.getDefaultDisplay();
-//        int screenWidth = display.getWidth();
-//        int screenHeight = display.getHeight();
-//        Glide.with(context)
-//                .load(dataDeatail.get(position - 1).getAvatar())
-//                .override(screenWidth / 2, screenHeight / 3)
-//                .into(holder.commentDetailIv);
-
         ImageManagerFactory.getImageManager(ImageManagerFactory.GLIDE).loadImageView(context,
                 dataDeatail.get(position - 1).getAvatar(), holder.commentDetailIv);
 
@@ -122,9 +116,6 @@ public class HomeCommentDetailAdapter extends RecyclerView.Adapter<HomeCommentDe
                 onClickCommenListener.onClickCommen(pos);
             }
         });
-
-//                dataDeatail.get(position).getCover(), holder.commentDetailIv);
-
     }
 
     @Override

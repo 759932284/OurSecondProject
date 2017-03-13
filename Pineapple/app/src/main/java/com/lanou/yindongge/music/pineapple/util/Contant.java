@@ -4,6 +4,9 @@ package com.lanou.yindongge.music.pineapple.util;
  * Created by dllo on 17/2/24.
  */
 
+/**
+ * 常量类
+ */
 public class Contant {
     public static final String BASE_URL = "http://m.live.netease.com/bolo/api/";
     // 首页-推荐-菠萝菌力荐
@@ -41,7 +44,6 @@ public class Contant {
     // 游戏杂谈-最新投稿
     public static final String GAME_TALK_MORE = BASE_URL + "zone/zoneNewVideoList.htm?pageNum=1&zoneId=14847213448701&pageSize=16";
 
-    public static final String HOT_BORING = BASE_URL + "rank/sceneList.htm";
 
     // 请求码
     private static int index = 0;
@@ -87,4 +89,6 @@ public class Contant {
     public static final int GAME_TALK_MORE_REQUESTCODE = index++;
     //
     public static final int HOT = index++;
+
+
 }

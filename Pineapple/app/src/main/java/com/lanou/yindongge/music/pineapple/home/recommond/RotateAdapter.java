@@ -20,6 +20,9 @@ import java.util.List;
  * Created by dllo on 17/2/28.
  */
 
+/**
+ * 首页-推荐-轮播图适配器
+ */
 public class RotateAdapter extends PagerAdapter {
     private Context context;
     private List<BannerResponse> dataBanner;

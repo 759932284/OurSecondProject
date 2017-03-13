@@ -67,7 +67,7 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
     //  private List<FavorEntity> list;
     private FavorEntity favorEntity;
     private ImageView saveIv;
-    private ImageView shareIv;
+    private ImageView shareIv, downIv;
     private TextView detailTitleTv;
 
 //    // 记录切换横竖屏播放的记录1
@@ -91,6 +91,9 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         saveIv = byView(R.id.detail_store_iv);
         saveIv.setOnClickListener(this);
 
+        downIv = byView(R.id.detail_load_down_iv);
+        downIv.setOnClickListener(this);
+
         mVideoView = (VideoView) findViewById(R.id.buffer);
 
         pb = (ProgressBar) findViewById(R.id.probar);
@@ -102,6 +105,7 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         moreRecommondRv = (RecyclerView) findViewById(R.id.detail_more_recommond_rv);
     }
 
+    // 界面到第一界面时走的方法
     @Override
     protected void onResume() {
         super.onResume();
@@ -150,6 +154,7 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         initDatas();
         // 网络请求多少集的数据
         OkHttpManager.getInstance().startGetRequest(Contant.GAME_TALK_MORE, Contant.GAME_TALK_MORE_REQUESTCODE, this);
+
     }
 
 //    @Override
@@ -256,6 +261,8 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
             case R.id.detail_share_iv:
                 showShare();
                 break;
+            case R.id.detail_load_down_iv:
+                Toast.makeText(this, "此功能暂未开放", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -270,9 +277,9 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
         oks.setTitleUrl("http://sharesdk.cn");
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
+        oks.setText(title);
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        oks.setImageUrl(imgStr);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
@@ -283,7 +290,7 @@ public class PlayActivity extends BaseActivity implements MediaPlayer.OnInfoList
         oks.setSite("ShareSDK");
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://sharesdk.cn");
-// 启动分享GUI
+        // 启动分享GUI
         oks.show(this);
     }
 

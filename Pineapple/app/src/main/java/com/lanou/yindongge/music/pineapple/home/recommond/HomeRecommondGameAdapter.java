@@ -20,12 +20,16 @@ import java.util.List;
  * Created by dllo on 17/2/21.
  */
 
+/**
+ * 首页-推荐-游戏杂谈部分适配器
+ */
 public class HomeRecommondGameAdapter extends RecyclerView.Adapter<HomeRecommondGameAdapter.HomeRecommondGameViewHolder> {
 
     private Context context;
     private List<GameTalkResponse.VideoListBean> dataGameTalk;
     private View gameHeaderView;
-
+    private static final int HEAD = 0;
+    private static final int DETAIL = 1;
     public void setDataGameTalk(List<GameTalkResponse.VideoListBean> dataGameTalk) {
         this.dataGameTalk = dataGameTalk;
         notifyDataSetChanged();
@@ -39,16 +43,16 @@ public class HomeRecommondGameAdapter extends RecyclerView.Adapter<HomeRecommond
     @Override
     public int getItemViewType(int position) {
         if (isHeader(position)) {
-            return 0;
+            return HEAD;
         }
-        else return 1;
+        else return DETAIL;
     }
 
     @Override
     public HomeRecommondGameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         HomeRecommondGameViewHolder holder = null;
         switch (viewType) {
-            case 0:
+            case HEAD:
                 holder = new HomeRecommondGameViewHolder(gameHeaderView);
                 // 适配屏幕宽高
                 ViewGroup.LayoutParams lpHeader = holder.gameHeaderIv.getLayoutParams();
@@ -57,7 +61,7 @@ public class HomeRecommondGameAdapter extends RecyclerView.Adapter<HomeRecommond
                 holder.gameHeaderIv.setLayoutParams(lpHeader);
 
                 break;
-            case 1:
+            case DETAIL:
                 View view = LayoutInflater.from(context).inflate(R.layout.item_home_recommond_game_detail, null);
                 holder = new HomeRecommondGameViewHolder(view);
 

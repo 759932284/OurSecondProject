@@ -5,12 +5,14 @@
     android:layout_margin="5dp"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/search_Btn"
+    <TextView
+        android:id="@+id/search_tv"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
         android:background="#FFB75B"
         android:textColor="#FFFFFF"
-        android:textSize="13sp"/>
+        android:gravity="center"
+        android:textSize="13sp"
+        android:text="111111"/>
 
 </LinearLayout>

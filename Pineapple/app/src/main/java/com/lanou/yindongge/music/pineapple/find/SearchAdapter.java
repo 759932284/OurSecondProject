@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lanou.yindongge.music.pineapple.R;
 import com.lanou.yindongge.music.pineapple.util.ScreenSizeUtils;
@@ -17,12 +18,22 @@ import java.util.List;
 
 /**
  * Created by dllo on 17/2/22.
+ *
+ * 搜索
  */
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder>{
     private Context context;
 
     private List<SearchBean> searchList;
+
+
+    private OnSearchTagClickListener onSearchTagClickListener;
+
+    public void setOnSearchTagClickListener(OnSearchTagClickListener onSearchTagClickListener) {
+        this.onSearchTagClickListener = onSearchTagClickListener;
+        notifyDataSetChanged();
+    }
 
     public SearchAdapter(Context context) {
         this.context = context;
@@ -37,16 +48,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     public SearchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.item_search_search, parent, false);
         SearchHolder holder = new SearchHolder(itemView);
-//        ViewGroup.LayoutParams lp = holder.searchBtn.getLayoutParams();
-//        lp.width = ScreenSizeUtils.getSreen(context, ScreenState.WIDTH);
-//        lp.height = ScreenSizeUtils.getSreen(context, ScreenState.HEIGHT) / 16;
-//        holder.searchBtn.setLayoutParams(lp);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(SearchHolder holder, int position) {
-        holder.searchBtn.setText(searchList.get(position).getKeyword());
+    public void onBindViewHolder(final SearchHolder holder, int position) {
+        holder.searchTv.setText(searchList.get(position).getKeyword());
+        // 标签点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getLayoutPosition();
+                onSearchTagClickListener.onSearchTagClick(pos);
+            }
+        });
     }
 
     @Override
@@ -55,10 +70,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     }
 
     class SearchHolder extends RecyclerView.ViewHolder {
-        Button searchBtn;
+        TextView searchTv;
         public SearchHolder(View itemView) {
             super(itemView);
-            searchBtn = (Button) itemView.findViewById(R.id.search_Btn);
+            searchTv = (TextView) itemView.findViewById(R.id.search_tv);
         }
+    }
+
+    interface OnSearchTagClickListener {
+        void onSearchTagClick(int position);
     }
 }
